@@ -29,7 +29,6 @@ exports.getAllTours = async (req, res) => {
       }
     });
   } catch (err) {
-    git;
     res.status(404).json({ status: 'fail', message: err });
   }
 };
