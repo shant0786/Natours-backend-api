@@ -2,7 +2,13 @@ const AppError = require('../utils/appError');
 
 const handleCastErrorDB = err => {
   const message = `Invalid ${err.path}:${err.value}.`;
-  return new AppError(message);
+  return new AppError(message, 400);
+};
+
+const handleDuplicateFieldsDB = err => {
+  const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+  const message = `Duplicate field value:${value}. Please use another value!`;
+  return new AppError(message, 400);
 };
 
 const sendErrorDev = (err, res) => {
@@ -24,7 +30,7 @@ const sendErrorProd = (err, res) => {
     // Programming or other unknown error: don't leak error details
   } else {
     // 1 Log error
-    console.log(err.isOperational, err);
+    console.error('ERROR 💥', err);
 
     // 2 send generic massage
     res.status(500).json({
@@ -43,6 +49,7 @@ module.exports = (err, req, res, next) => {
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
     if (error.name === 'CastError') error = handleCastErrorDB(error);
+    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
 
     sendErrorProd(error, res);
   }

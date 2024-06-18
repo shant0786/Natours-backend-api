@@ -90,7 +90,6 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
     },
     {
       $group: {
-        // _id: '$ratingsAverage',
         _id: { $toUpper: '$difficulty' },
         numTours: { $sum: 1 },
         numRatings: { $sum: '$ratingsQuantity' },
@@ -155,7 +154,7 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
       $sort: { numTourStarts: -1 }
     },
     {
-      $limit: 6
+      $limit: 12
     }
   ]);
 
