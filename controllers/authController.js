@@ -17,7 +17,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.Confirm,
-    passwordChangedAt: req.body.passwordChangedAt //*! Warning this line is improvised i//
+    passwordChangedAt: req.body.passwordChangedAt, //*! Warning this line is improvised i//
+    role: req.body.role //*! Warning this line is improvised i//
   });
 
   const token = signToken(newUser._id);
@@ -86,3 +87,15 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    // roles ['admin','lead-guide'] role=admin
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You don not have permission to perform this action', 403)
+      );
+    }
+    next();
+  };
+};
