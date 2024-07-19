@@ -115,6 +115,12 @@ tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
 });
 
+// Vetual Populate
+tourSchema.vetual('reviews', {
+  ref: 'Review',
+  foreignFiled: 'tour',
+  localFiled: '_id'
+});
 // DOCUMENT MIDDLEWARE : it runs before .save() and .create()
 tourSchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });
