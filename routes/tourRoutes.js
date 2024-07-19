@@ -2,6 +2,7 @@ const express = require('express');
 
 const tourController = require('../controllers/tourController');
 const authController = require('../controllers/authController');
+const reviewController = require('../controllers/reviewController');
 
 const router = express.Router();
 
@@ -25,4 +26,15 @@ router
     tourController.deleteTour
   );
 
+//  POST / tour / 1f5g4d4g /reviews
+//  GET / tour / 1f5g4d4g /reviews
+//  GET / tour / 1f5g4d4g /reviews/sdfdsf556
+
+router
+  .route('/:tourId/review')
+  .post(
+    authController.protect,
+    authController.restrictTo('user'),
+    reviewController.createReview
+  );
 module.exports = router;
