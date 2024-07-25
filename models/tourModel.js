@@ -116,10 +116,10 @@ tourSchema.virtual('durationWeeks').get(function() {
 });
 
 // Vetual Populate
-tourSchema.vetual('reviews', {
+tourSchema.virtual('reviews', {
   ref: 'Review',
-  foreignFiled: 'tour',
-  localFiled: '_id'
+  foreignField: 'tour',
+  localField: '_id'
 });
 // DOCUMENT MIDDLEWARE : it runs before .save() and .create()
 tourSchema.pre('save', function(next) {
