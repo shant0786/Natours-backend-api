@@ -149,6 +149,7 @@ tourSchema.pre(/^find/, function(next) {
     path: 'guides',
     select: '-__v -passwordChangedAt'
   });
+  next();
 });
 tourSchema.pre(/^find/, function(next) {
   this.find({ secretTour: { $ne: true } });
@@ -167,6 +168,7 @@ tourSchema.pre('aggregate', function(next) {
 
   next();
 });
+
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
