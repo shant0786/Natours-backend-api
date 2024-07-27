@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const slugify = require('slugify');
 // const User = require('./userModel');
+
 // const validator = require('validator');
 
 const tourSchema = new mongoose.Schema(
@@ -144,16 +145,14 @@ tourSchema.pre('save', function(next) {
 // QUERY MIDDLEWARE
 
 tourSchema.pre(/^find/, function(next) {
-  this.find({ secretTour: { $ne: true } });
-  this.start = Date.now();
-  next();
-});
-
-tourSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'guides',
     select: '-__v -passwordChangedAt'
   });
+});
+tourSchema.pre(/^find/, function(next) {
+  this.find({ secretTour: { $ne: true } });
+  this.start = Date.now();
   next();
 });
 
@@ -163,12 +162,11 @@ tourSchema.post(/^find/, function(docs, next) {
 });
 
 // AGGREGATION MIDDDLEWARE
-// tourSchema.pre('aggregate', function(next) {
-//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+tourSchema.pre('aggregate', function(next) {
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 
-//   next();
-// });
-
+  next();
+});
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
