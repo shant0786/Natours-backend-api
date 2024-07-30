@@ -12,7 +12,7 @@ const router = express.Router();
 //  GET / tour / 1f5g4d4g /reviews
 //  GET / tour / 1f5g4d4g /reviews/sdfdsf556
 
-// router
+// router replaced by line below
 //   .route('/:tourId/review')
 //   .post(
 //     authController.protect,
@@ -33,6 +33,13 @@ router
     authController.restrictTo('admin', 'lead-guide', 'guide'),
     tourController.getMonthlyPlan
   );
+
+router
+  .route('/tours-within/:distance/center/:latlng/unit/:unit')
+  .get(tourController.getToursWithin);
+// /tours-distance?distance=233&center=-40,45&unit=mi
+// /tours-distance/233/center/-40,45/unit/mi
+
 router
   .route('/')
   .get(tourController.getAllTours)
