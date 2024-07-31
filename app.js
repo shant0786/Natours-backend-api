@@ -1,5 +1,5 @@
 const express = require('express');
-
+const path = require('path');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -15,7 +15,13 @@ const reviewRouter = require('./routes/reviewRoutes');
 
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 ///GLOBAL * MIDDLEWARE *\\\
+
+// Serving statics files
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Secure http headers
 app.use(helmet());
 // Devlopment login
@@ -51,8 +57,6 @@ app.use(
     ]
   })
 );
-// Serving statics files
-app.use(express.static(`${__dirname}/public`));
 
 // test middleware
 app.use((req, res, next) => {
@@ -60,6 +64,10 @@ app.use((req, res, next) => {
 
   // console.log(req.headers);
   next();
+});
+// 3) ROUTES
+app.get('/', (req, res) => {
+  res.status(200).render('base');
 });
 
 app.use('/api/v1/tours', tourRouter);
