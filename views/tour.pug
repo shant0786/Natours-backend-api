@@ -2,9 +2,11 @@ extends base
 include _reviewCard
       
 block append head
-  //- script(src='/js/mapbox.js')
+  script(src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js')
+  link(href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet')
 
-mixin overviewBox(label,text,icon)
+
+mixin overviewBox(label,text,icon) 
   .overview-box__detail
     svg.overview-box__icon
       use(xlink:href=`/img/icons.svg#icon-${icon}`)
@@ -69,6 +71,7 @@ block content
 
   section.section-map
     #map(data-locations=`${JSON.stringify(tour.locations)}`)
+    
 
   section.section-reviews
     .reviews
@@ -86,3 +89,5 @@ block content
         h2.heading-secondary What are you waiting for?
         p.cta__text= `${tour.duration} days. 1 adventure. Infinite memories. Make it yours today!`
         button.btn.btn--green.span-all-rows Book tour now!
+
+
