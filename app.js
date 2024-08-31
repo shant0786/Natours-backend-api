@@ -13,6 +13,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -28,8 +29,22 @@ app.use(helmet());
 // Devlopment login
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
-}  
+}
 
+//  Axios CDN link refused to load:Fix
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'", 'data:', 'blob:'],
+      fontSrc: ["'self'", 'https:', 'data:'],
+      scriptSrc: ["'self'", 'unsafe-inline'],
+      scriptSrc: ["'self'", 'https://*.cloudflare.com'],
+      scriptSrcElem: ["'self'", 'https:', 'https://*.cloudflare.com'],
+      styleSrc: ["'self'", 'https:', 'unsafe-inline'],
+      connectSrc: ["'self'", 'data', 'https://*.cloudflare.com']
+    }
+  })
+);
 // Limit requests from same API
 const limiter = rateLimit({
   max: 100,
@@ -39,7 +54,7 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 // Body parcer, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
-
+app.use(cookieParser());
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 
@@ -63,7 +78,7 @@ app.use(
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
 
-  // console.log(req.headers);
+  console.log(req.cookies);
   next();
 });
 // 3) ROUTES
