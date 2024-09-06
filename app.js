@@ -38,10 +38,10 @@ app.use(
       defaultSrc: ["'self'", 'data:', 'blob:'],
       fontSrc: ["'self'", 'https:', 'data:'],
       scriptSrc: ["'self'", 'unsafe-inline'],
-      scriptSrc: ["'self'", 'https://*.cloudflare.com'],
       scriptSrcElem: ["'self'", 'https:', 'https://*.cloudflare.com'],
       styleSrc: ["'self'", 'https:', 'unsafe-inline'],
-      connectSrc: ["'self'", 'data', 'https://*.cloudflare.com']
+      // connectSrc: ["'self'", 'data', 'https://*.cloudflare.com'],
+      connectSrc: ["'self'", 'http://127.0.0.1:3000']
     }
   })
 );
