@@ -1,0 +1,1027 @@
+{
+	"info": {
+		"_postman_id": "4a24db03-865e-4bf4-84fe-a55c6d0ea347",
+		"name": "Natours",
+		"description": "The Natours APi contains for tours, Users and Reviews.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34356635"
+	},
+	"item": [
+		{
+			"name": "Tours",
+			"item": [
+				{
+					"name": "Create New Tour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n                \"name\": \"New Test Tour\",\r\n                \"duration\":1,\r\n                \"maxGroupSize\": 1,\r\n                \"difficulty\": \"easy\",\r\n                \"price\": 200,\r\n                \"priceDiscount\":100,\r\n                \"summary\": \"Test tour\",\r\n                \"ratingsAverage\":4,\r\n                \"imageCover\": \"tour-3-cover.jpg\"\r\n                \r\n                \r\n                \r\n   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/tours",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update tour",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n  \r\n   \"ratingAverage\":6,\r\n   \"difficulty\":\"whatever\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/tours/666326134c92cb02e02a931a",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours",
+								"666326134c92cb02e02a931a"
+							]
+						},
+						"description": "\n# PATCH /api/v1/tours/666326134c92cb02e02a931a\n\nThis endpoint is used to update the details of a specific tour.\n\n## Request Body\n- `ratingAverage` (number, required): The new average rating for the tour.\n- `difficulty` (string, required): The updated difficulty level of the tour.\n\n## Response\nThe response will conform to the following JSON schema:\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"data\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"tour\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"ratingAverage\": {\n              \"type\": \"number\"\n            },\n            \"difficulty\": {\n              \"type\": \"string\"\n            }\n          }\n        }\n      }\n    }\n  }\n}\n```\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Tour",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// No changes needed for the existing test script\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/tours/666fe2f5621862384826249c",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours",
+								"666fe2f5621862384826249c"
+							]
+						},
+						"description": "\nThis API endpoint sends an HTTP DELETE request to delete a specific tour with the ID \"666fe2f5621862384826249c\".\n\n### Request Body\nThis request does not require a request body.\n\n### Response\nUpon successful deletion, the response will not include a message body. The status code will indicate the success of the deletion operation.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Tours",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/tours?price[lt]=1000&ratingsAverage[gte]=4.7",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours"
+							],
+							"query": [
+								{
+									"key": "price[lt]",
+									"value": "1000",
+									"description": "price less than"
+								},
+								{
+									"key": "ratingsAverage[gte]",
+									"value": "4.7",
+									"description": "ratings geater than equals"
+								}
+							]
+						},
+						"description": "\n# Retrieve Tours by Price and Average Ratings\n\nThis endpoint makes an HTTP GET request to retrieve a list of tours based on the specified price and average ratings.\n\n## Request\n\n### Query Parameters\n\n- `price[lt]` (number, required): Specifies the maximum price for the tours to be retrieved.\n- `ratingsAverage[gte]` (number, required): Specifies the minimum average rating for the tours to be retrieved.\n\n## Response\n\nThe response for this request will be a JSON object containing an array of tours that match the specified criteria. The schema for the response will be as follows:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"tours\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          // Properties of the tour object\n        }\n      }\n    }\n  }\n}\n```\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Top 5 Cheap Tours",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/v1/tours/top-5-cheap",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours",
+								"top-5-cheap"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-price,-ratingsAverage",
+									"disabled": true
+								}
+							]
+						},
+						"description": "\nThis endpoint makes an HTTP GET request to retrieve the top 5 cheap tours. The response of this request is documented below as a JSON schema.\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"tours\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"tourName\": {\n            \"type\": \"string\"\n          },\n          \"price\": {\n            \"type\": \"number\"\n          },\n          \"duration\": {\n            \"type\": \"number\"\n          },\n          \"ratingsAverage\": {\n            \"type\": \"number\"\n          }\n        }\n      }\n    }\n  }\n}\n```\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Monthly Plan",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/v1/tours/monthly-plan/2021",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours",
+								"monthly-plan",
+								"2021"
+							]
+						},
+						"description": "\nThis endpoint retrieves the monthly plan for tours in the year 2021.\n\nThe response of this request is a JSON schema that represents the structure of the data returned by the API.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tour Stats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/v1/tours",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours"
+							]
+						},
+						"description": "\nThis endpoint makes an HTTP GET request to retrieve a list of tours from the API. The response of this request can be documented as a JSON schema to provide a structured description of the expected JSON format for the response data.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/v1/tours/66a53612d769da173c367116",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours",
+								"66a53612d769da173c367116"
+							]
+						},
+						"description": "\n# Get Tour Details\n\nThis endpoint retrieves the details of a specific tour.\n\n## Request\n\n- Method: GET\n- URL: `{{URL}}api/v1/tours/66a53612d769da173c367116`\n\n## Response\nThe response for this request is a JSON object representing the details of the tour. Below is a JSON schema representing the structure of the response:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"tourId\": {\n      \"type\": \"string\"\n    },\n    \"tourName\": {\n      \"type\": \"string\"\n    },\n    \"tourDescription\": {\n      \"type\": \"string\"\n    },\n    \"tourLocation\": {\n      \"type\": \"string\"\n    },\n    \"tourStartDate\": {\n      \"type\": \"string\",\n      \"format\": \"date-time\"\n    },\n    \"tourEndDate\": {\n      \"type\": \"string\",\n      \"format\": \"date-time\"\n    },\n    \"tourPrice\": {\n      \"type\": \"number\"\n    },\n    \"tourCapacity\": {\n      \"type\": \"integer\"\n    },\n    \"tourGuide\": {\n      \"type\": \"string\"\n    }\n  }\n}\n```\n"
+					},
+					"response": [
+						{
+							"name": "Get Tour",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3000/api/v1/tours/asadas",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"tours",
+										"asadas"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": [],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\":\"Administrator\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/users/5c8a1d5b0190b214360dc057",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"users",
+								"5c8a1d5b0190b214360dc057"
+							]
+						},
+						"description": "\nThis HTTP PATCH request is used to update specific details of a user with the provided ID. The request should be made to the endpoint `{{URL}}api/v1/users/5c8a1d5b0190b214360dc057`. The request body should be in raw format and include the updated user details, such as the user's name. \n\n### Request Body\n- `name` (string, required): The updated name of the user.\n\n### Response\nThe response will include the updated details of the user after the patch request is processed.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tours Within Radius",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/tours/tours-within/400/center/34.052235,-118.243683/unit/mi",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours",
+								"tours-within",
+								"400",
+								"center",
+								"34.052235,-118.243683",
+								"unit",
+								"mi"
+							]
+						},
+						"description": "\nThis endpoint makes an HTTP GET request to retrieve a list of tours within a specified distance from a geographical center. The request includes the distance in miles and the coordinates of the center.\n\nThe response of this request is a JSON schema representing the list of tours within the specified distance from the center. The JSON schema will define the structure of the response data, including the properties and their data types.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Distances to Tour",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/tours/distances/34.052235,-118.243683/unit/km",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours",
+								"distances",
+								"34.052235,-118.243683",
+								"unit",
+								"km"
+							]
+						},
+						"description": "\nThis endpoint retrieves the distance of a tour in kilometers based on the provided coordinates. \n\nThe response of this request is a JSON schema with the following properties:\n- \"status\": A string indicating the status of the request.\n- \"data\": An object containing the tour distance data, including the tour ID and the distance in kilometers.\n\nExample response:\n```json\n{\n    \"status\": \"success\",\n    \"data\": {\n        \"tourId\": \"12345\",\n        \"distance\": 25.7\n    }\n}\n```\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/v1/users",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"users"
+							]
+						},
+						"description": "\nThis endpoint makes an HTTP GET request to retrieve a list of users from the API. The response of this request can be documented as a JSON schema.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/users",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"users"
+							]
+						},
+						"description": "\nThis endpoint makes an HTTP GET request to retrieve a list of users from the API. The response of this request is documented below as a JSON schema:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"users\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"id\": {\n            \"type\": \"string\"\n          },\n          \"username\": {\n            \"type\": \"string\"\n          },\n          \"email\": {\n            \"type\": \"string\"\n          },\n          \"role\": {\n            \"type\": \"string\"\n          }\n          // Additional properties may be present based on the user data\n        }\n      }\n    }\n  }\n}\n```\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n    \"email\": \"test@test.io\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/users/forgotPassword",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"users",
+								"forgotPassword"
+							]
+						},
+						"description": "\n### Forgot Password\n\nThis endpoint is used to trigger the forgot password flow for a user.\n\n#### Request Body\n- email (string, required): The email address of the user for whom the forgot password flow is triggered.\n\n#### Response\nThe response of this request is a JSON schema. The structure of the response will follow a predefined schema, which can be used for validating the response format.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Current User Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \r\n    \"name\":\"R\", \"role\":\"admin\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/users/updateMe",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"users",
+								"updateMe"
+							]
+						},
+						"description": "\n### Update User Information\n\nThis endpoint allows the user to update their information.\n\n#### Request Body\n- `name` (string, optional): The updated name of the user.\n- `role` (string, optional): The updated role of the user.\n\n#### Response\nThe response of this request is a JSON schema representing the updated user information. The schema includes the updated user's details such as name, role, and any other relevant information.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Current User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/v1/users/deleteMe",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"users",
+								"deleteMe"
+							]
+						},
+						"description": "\nThis endpoint is used to delete the currently authenticated user's account.\n\n### Request\n\n- Method: DELETE\n- URL: {{URL}}api/v1/users/deleteMe\n\n### Response\n\nThe response of this request is a JSON schema describing the structure of the response data.\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Update Current User password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"pass1234\",\r\n    \"name\":\"Rasel Mahmud\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/users/updateMyPassword",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"users",
+								"updateMyPassword"
+							]
+						},
+						"description": "\n# Update User Password\n\nThis endpoint is used to update the password of the currently authenticated user.\n\n## Request\n\n- Method: `PATCH`\n- URL: `{{URL}}api/v1/users/updateMyPassword`\n- Headers: \n  - Content-Type: application/json\n\n### Request Body\n- `password` (string, required): The new password for the user.\n- `name` (string, required): The name of the user.\n\nExample:\n```json\n{\n  \"password\": \"********\",\n  \"name\": \"********\"\n}\n```\n\n## Response\n\nThe response for this request is a JSON object with the following schema:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"data\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"user\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"id\": {\n              \"type\": \"string\"\n            },\n            \"name\": {\n              \"type\": \"string\"\n            }\n            // Add more properties as per the actual response\n          }\n        }\n      }\n    }\n  }\n}\n```\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"password\":\"pass1234\",\r\n    \"passwordConfirm\":\"pass1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/users/resetPassword/3548787ae2f5266a869991d9c7ef9df1fd99058ff9f173ae638bd0688cc1d982",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"users",
+								"resetPassword",
+								"3548787ae2f5266a869991d9c7ef9df1fd99058ff9f173ae638bd0688cc1d982"
+							]
+						},
+						"description": "\nThis HTTP PATCH request is used to reset the password for a specific user identified by the provided ID. The request should include a payload in the raw request body type, with the keys \"password\" and \"passwordConfirm\" to set the new password and confirm the new password, respectively.\n\n### Request Body\n- `password` (string, required): The new password for the user.\n- `passwordConfirm` (string, required): Confirmation of the new password.\n\n### Response\nThe response to this request will vary based on the success or failure of the password reset operation. It may include a success message or an error message indicating the reason for failure.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Sign Up",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\r\n\"name\":\"Tester\",\r\n\"email\":\"tester@test.io\",\r\n\"password\":\"pass12345\",\r\n\"passwordConfirm\":\"pass12345\"\r\n\r\n\r\n\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/users/signup",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"users",
+								"signup"
+							]
+						},
+						"description": "\nThis endpoint allows users to sign up by sending a POST request to the specified URL. The request should include a JSON payload in the raw request body type with the following parameters:\n- name (string): The name of the user.\n- email (string): The email address of the user.\n- password (string): The chosen password for the account.\n- passwordConfirm (string): Confirmation of the chosen password.\n\nThe response to this request will include the relevant user signup details, such as user ID or any additional information related to the signup process.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Log in",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n\"email\": \"sophie@example.com\",\r\n\"password\":\"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/users/login",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"users",
+								"login"
+							]
+						},
+						"description": "\n### API Endpoint Description\n\nThis API endpoint is used to authenticate and login users.\n\n### Request Body Parameters\n- `email` (string, required): The email address of the user.\n- `password` (string, required): The password of the user.\n\n### Response\nThe response of this request is a JSON object representing the authentication status and user information.\n\n#### JSON Schema\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"user\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\"\n        },\n        \"username\": {\n          \"type\": \"string\"\n        },\n        \"email\": {\n          \"type\": \"string\"\n        }\n        // Add more properties as per the actual response\n      }\n    }\n  }\n}\n```\n"
+					},
+					"response": []
+				}
+			],
+			"description": "Route related to authentication"
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "Update Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n    \"rating\":4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/reviews/5c8a359914eb5c17645c910a",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"reviews",
+								"5c8a359914eb5c17645c910a"
+							]
+						},
+						"description": "\n### Update Review\nThis endpoint is used to update a specific review by sending an HTTP PATCH request to the specified review ID.\n\n#### Request Body\n- `rating` (number, required): The new rating to be updated for the review.\n\nExample:\n```json\n{\n    \"rating\": 0\n}\n```\n\n#### Response\nThe response for this request will follow the JSON schema below:\n\n```json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"id\": {\n            \"type\": \"string\"\n        },\n        \"rating\": {\n            \"type\": \"number\"\n        },\n        \"comment\": {\n            \"type\": \"string\"\n        },\n        \"userId\": {\n            \"type\": \"string\"\n        },\n        \"productId\": {\n            \"type\": \"string\"\n        },\n        \"createdAt\": {\n            \"type\": \"string\",\n            \"format\": \"date-time\"\n        },\n        \"updatedAt\": {\n            \"type\": \"string\",\n            \"format\": \"date-time\"\n        }\n    }\n}\n```\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Reviews",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"review\":\"Amaizing tour\",\r\n    \"rating\":5,\r\n    \"tour\":\"5c88fa8cf4afda39709c2951\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/reviews/",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"reviews",
+								""
+							]
+						},
+						"description": "\n### Get Reviews\n\nThis endpoint makes an HTTP GET request to retrieve a list of reviews.\n\n#### Response\nThe response of this request is a JSON object representing the list of reviews. Below is a JSON schema representing the structure of the response:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"reviewId\": {\n      \"type\": \"string\"\n    },\n    \"userId\": {\n      \"type\": \"string\"\n    },\n    \"tourId\": {\n      \"type\": \"string\"\n    },\n    \"review\": {\n      \"type\": \"string\"\n    },\n    \"rating\": {\n      \"type\": \"number\"\n    },\n    \"createdAt\": {\n      \"type\": \"string\",\n      \"format\": \"date-time\"\n    },\n    \"updatedAt\": {\n      \"type\": \"string\",\n      \"format\": \"date-time\"\n    }\n  }\n}\n```\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tour Reviews on Tour",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"review\":\"Amaizing tour\",\r\n    \"rating\":5,\r\n    \"tour\":\"5c88fa8cf4afda39709c2951\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/tours/66a53612d769da173c367116/reviews",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours",
+								"66a53612d769da173c367116",
+								"reviews"
+							]
+						},
+						"description": "\n    \n### GET /api/v1/tours/66a53612d769da173c367116/reviews\n\nThis endpoint retrieves the reviews for a specific tour.\n\n#### Request\nNo request body is required for this endpoint.\n\n#### Response\nThe response will be a JSON object with the following schema:\n\n```json\n{\n    \"reviews\": {\n        \"type\": \"array\",\n        \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"review\": {\n                    \"type\": \"string\"\n                },\n                \"rating\": {\n                    \"type\": \"number\"\n                },\n                \"tour\": {\n                    \"type\": \"string\"\n                }\n            }\n        }\n    }\n}\n```\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Review on Tour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"review\":\"amazing\",\r\n\"rating\":4\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/tours/66a53612d769da173c367116/reviews",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"tours",
+								"66a53612d769da173c367116",
+								"reviews"
+							]
+						},
+						"description": "\nThe API endpoint allows users to submit reviews for a specific tour. The HTTP POST request should be made to `{{URL}}api/v1/tours/66a53612d769da173c367116/reviews`. The request should include a JSON payload in the raw request body type with the keys \"review\" and \"rating\".\n\n### Request Body\n- `review` (string, required): The review text.\n- `rating` (number, required): The rating given for the tour.\n\n### Response\nThe response for this request can be documented as a JSON schema.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/v1/reviews/66a538fd4c80e21624376156",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"v1",
+								"reviews",
+								"66a538fd4c80e21624376156"
+							]
+						},
+						"description": "### Delete Review\n\nThis endpoint is used to delete a specific review by providing the review ID in the URL.\n\n#### Request Body\n\nThe request does not require a request body.\n\n#### Response\n\nThe response will indicate the success or failure of the deletion operation."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
